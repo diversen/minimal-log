@@ -1,0 +1,26 @@
+{
+    "name": "diversen/minimal-log",
+    "type": "library",
+    "description": "A simple and very basic PHP log class. Can be used with your server and in commandline.",
+    "homepage": "http://github.com/diversen/minimal-log",
+    "keywords": ["log", "logger", "error log"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dennis Iversen",
+            "email": "dennis.iversen@gmail.com",
+            "homepage": "https://github.com/diversen",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "diversen\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
