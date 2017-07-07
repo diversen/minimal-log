@@ -24,6 +24,11 @@ class log {
     public static $debug = false;
     
     /**
+     * Enable newline in CLI for every message written to log file
+     */
+    public static $newlineFile = PHP_EOL;
+    
+    /**
      * Enable debug flag
      */
     public static function enableDebug () {
@@ -53,7 +58,7 @@ class log {
         }
 
         if (self::$logFile) {
-            error_log($message, 3, self::$logFile);
+            error_log($message . self::$newlineFile, 3, self::$logFile);
             error_log($message, 4);
         } else {
             error_log($message, 4);
