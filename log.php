@@ -22,6 +22,12 @@ class log {
      * var boolean $debug default is false
      */
     public static $debug = false;
+
+    /** 
+     * Set <pre> tags around message if on SERVER
+     * To message
+     */
+    public static $pre = true;
     
     /**
      * Enable newline in CLI for every message written to log file
@@ -52,8 +58,7 @@ class log {
             $message = var_export($message, true);
         }
 
-
-        if (!self::isCli()) {
+        if (!self::isCli() && self::$pre) {
             $message = "<pre>" . $message . "</pre>";
         }
 
@@ -70,10 +75,11 @@ class log {
      * @return boolean $res true if we are and false
      */
     public static function isCli () {
-        if (isset($_SERVER['SERVER_NAME'])){
-            return false;
+        
+        if (php_sapi_name() === 'cli') {
+            return true;
         }
-        return true;
+        return false;
     }
     
     /**

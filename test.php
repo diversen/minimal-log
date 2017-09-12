@@ -28,5 +28,13 @@ log::debug('Test debug');
 // log file
 log::setErrorLogFile('test.log');
 
-// No this is also logged to a file
+
+// Turn of <pre> tags to SAPI log
+// You may want to turn this of for cli-server
+// As the cli server writes to stdout
+
+log::$pre = false;
+
+// Now this is also logged to a file
+// But without <pre> no matter what the SAPI is. 
 log::error('Test error - also in in file');
