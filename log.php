@@ -9,13 +9,10 @@ namespace diversen;
 class log {
 
     /**
-     * Var holding log file for CLI mode
-     * In Server mode e.g. apache2, we will use the system system log
-     * facilities
-     * Default is default.log
+		 * Logfile
      * @var string $logfile
      */
-    public static $logFile = null;
+    public static $logFile = 'error.log';
     
     /**
      * Debug flag
@@ -23,19 +20,8 @@ class log {
      */
     public static $debug = false;
 
-    /** 
-     * Set <pre> tags around message if on SERVER
-     * To message
-     */
-    public static $pre = true;
-    
     /**
-     * Enable newline in CLI for every message written to log file
-     */
-    public static $newlineFile = PHP_EOL;
-    
-    /**
-     * Enable debug flag
+     * Enable debug flags. Set high error level and output any error and debug notices
      */
     public static function enableDebug () {
         ini_set('display_errors', 1);
@@ -45,12 +31,8 @@ class log {
     }
     
     /**
-     * Logs an error. Will always be written to log file
-     * if using a web server it will be logged to the default
-     * server error file. If cli it will be written in 'default.log'
-     * or a log file you may set yourself
+     * Logs an error. If debug is set then output to console or browser
      * @param string $message
-     * @param boolean $write_file
      */
     public static function error ($message) {
 
@@ -58,21 +40,24 @@ class log {
             $message = var_export($message, true);
         }
 
-        if (!self::isCli() && self::$pre) {
-            $message = "<pre>" . $message . "</pre>";
-        }
+        if (!self::isCli()) {
+            $output_message = "<pre>" . $message . "</pre>";
+        } else {
+						$output_message = $message;
+				}
 
         if (self::$logFile) {
-            error_log($message . self::$newlineFile, 3, self::$logFile);
-            error_log($message, 4);
-        } else {
-            error_log($message, 4);
+            error_log($message . PHP_EOL, 3, self::$logFile);
         }
+
+				if (self::$debug) {
+						echo $output_message . PHP_EOL;
+				}
     }
     
     /**
      * Checks if we are in CLI mode
-     * @return boolean $res true if we are and false
+     * @return boolean $res true if cli else false
      */
     public static function isCli () {
         
@@ -84,7 +69,7 @@ class log {
     
     /**
      * Debug a message. Writes to stdout and to log file 
-     * if debug = 1 is set in config - else any message is ignored
+     * if debug = false then any message to this method is ignored
      * @param string $message 
      */
     public static function debug ($message) {       
@@ -95,7 +80,7 @@ class log {
     }
 
     /**
-     * Set log file. 
+     * Set error log file. 
      * Is used for CLI - as CLI does not have a default log file
      * @param string $file
      */    

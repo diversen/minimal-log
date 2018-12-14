@@ -11,30 +11,18 @@ use diversen\log;
 // the server or in commandline mode. If it is
 // Running on the server, then the message will be
 // enclosed in `pre` tags.
-log::error('Test error');
+log::error('Error without debug mode. Not to be seen but added to error.log');
 
 // Will not be shown
-log::debug('Test debug');
+log::debug('Debug without debug mode. Not to be seen and not added to error.log');
 
 // Enable debug to output all errors and all debug info
 log::enableDebug();
 
 // Will both be shown
-log::error('Test error');
-log::debug('Test debug');
+log::error('Error in debug mode. To be seen an to be added to error.log');
+log::debug('Debug in debug mode. To be seen and added to error.log');
 
-// The log system will log the SAPI via error_log
-// You can specify another log file than the system
-// log file
+// Change log file
 log::setErrorLogFile('test.log');
 
-
-// Turn of <pre> tags to SAPI log
-// You may want to turn this of for cli-server
-// As the cli server writes to stdout
-
-log::$pre = false;
-
-// Now this is also logged to a file
-// But without <pre> no matter what the SAPI is. 
-log::error('Test error - also in in file');

@@ -1,6 +1,6 @@
 # minimal-log
 
-A thin and simple System-like error-log class
+A thin and simple debug- and error-log class
 
 Install 
 
